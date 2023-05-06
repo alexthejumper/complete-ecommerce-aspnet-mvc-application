@@ -1,9 +1,13 @@
 using eTickets.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//DbContext configuration
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
 var app = builder.Build();
 
@@ -15,8 +19,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//DbContext configuration
-builder.Services.AddDbContext<AppDbContext>();
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
